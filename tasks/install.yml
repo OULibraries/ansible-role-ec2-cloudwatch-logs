@@ -1,0 +1,52 @@
+---
+- name: Ensure /opt/oulib/ec2-ops/bin exists
+  file:
+    path: /opt/oulib/ec2-ops/bin
+    state: directory
+    mode: 0655
+    owner: root
+    group: wheel
+    recurse: yes
+
+- name: Add ec2_get_region.sh to /opt/oulib/ec2-ops/bin
+  copy:
+    src: ec2_get_region.sh
+    dest: /opt/oulib/ec2-ops/bin/
+    mode: 0754
+    owner: root
+    group: wheel
+
+- name: Ensure /etc/profile.d/oulib-ec2-ops.sh exists
+  file:
+    path: /etc/profile.d/oublib-ec2-ops.sh
+    state: touch
+    mode: 0644
+    owner: root
+    group: root
+
+- name: Add ops scripts to path
+  lineinfile: "dest=/etc/profile.d/oulib-ec2-ops.sh line='export PATH=/opt/oulib/ec2-ops/bin:$PATH'"
+
+- name: Discover the EC2 instance region
+  # Reversing the string is hacky but readable and efficient enough...
+  command: "ec2_get_region.sh"
+  register: ec2_region
+
+- name: Configure /tmp/awslogs.conf
+  template:
+    dest: /tmp/awslogs.conf
+    group: root
+    mode: 0600
+    owner: root
+    src: awslogs.conf.j2
+
+- name: Download the awslogs-agent-setup.py script
+  get_url:
+    dest: /tmp/awslogs-agent-setup.py
+    group: root
+    owner: root
+    mode: 0600
+    url: https://s3.amazonaws.com/aws-cloudwatch/downloads/latest/awslogs-agent-setup.py
+
+- name: Install the AWS CloudWatch Logs daemon
+  shell: python /tmp/awslogs-agent-setup.py -n -r {{ ec2_region.stdout }} -c /tmp/awslogs.conf

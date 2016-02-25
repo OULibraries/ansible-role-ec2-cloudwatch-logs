@@ -1,0 +1,4 @@
+---
+# tasks file for ec2-cloudwatch-logs
+- include: install.yml
+- include: cleanup.yml
