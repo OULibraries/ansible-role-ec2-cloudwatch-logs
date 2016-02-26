@@ -28,7 +28,6 @@
   lineinfile: "dest=/etc/profile.d/oulib-ec2-ops.sh line='export PATH=/opt/oulib/ec2-ops/bin:$PATH'"
 
 - name: Discover the EC2 instance region
-  # Reversing the string is hacky but readable and efficient enough...
   command: "ec2_get_region.sh"
   register: ec2_region
 
