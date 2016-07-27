@@ -18,7 +18,7 @@
 
 - name: Ensure /etc/profile.d/oulib-ec2-ops.sh exists
   file:
-    path: /etc/profile.d/oublib-ec2-ops.sh
+    path: /etc/profile.d/oulib-ec2-ops.sh
     state: touch
     mode: 0644
     owner: root
