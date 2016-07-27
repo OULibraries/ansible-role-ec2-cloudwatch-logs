@@ -28,7 +28,7 @@
   lineinfile: "dest=/etc/profile.d/oulib-ec2-ops.sh line='export PATH=/opt/oulib/ec2-ops/bin:$PATH'"
 
 - name: Discover the EC2 instance region
-  command: "ec2_get_region.sh"
+  command: "/opt/oulib/ec2-ops/bin/ec2_get_region.sh"
   register: ec2_region
 
 - name: Configure /tmp/awslogs.conf
