@@ -53,7 +53,7 @@ Include the `ec2-cloudwatch-logs` role in your playbook yml like this:
           stream_name: "{hostname}_syslog"
           group_name: syslog
         - file: /var/log/secure
-          format: "%Y-%m-%d %H:%M:%S"
+          format: "%b %d %H:%M:%S"
           stream_name: "{hostname}_secure"
           group_name: secure
         - file: /var/log/messages
@@ -61,7 +61,7 @@ Include the `ec2-cloudwatch-logs` role in your playbook yml like this:
           stream_name: "{hostname}_messages"
           group_name: messages
         - file: /var/log/nginx/*.access.log
-          format: "%b %d %H:%M:%S"
+          format: "%d/%b/%Y%H:%M:%S %z"
           stream_name: "{hostname}_nginx_access_log"
           group_name: nginx_access_log
         - file: /var/log/my_cool_log
