@@ -49,3 +49,11 @@
 
 - name: Install the AWS CloudWatch Logs daemon
   shell: python /tmp/awslogs-agent-setup.py -n -r {{ ec2_region.stdout }} -c /tmp/awslogs.conf
+
+- name: Add logrotate config that actually specifies an interval
+  copy:
+    src: awslogs.logrotate
+    dest: /etc/logrotate.d/awslogs
+    mode: 0644
+    owner: root
+    group: root
