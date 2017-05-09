@@ -73,7 +73,7 @@ Include the `ec2-cloudwatch-logs` role in your playbook yml like this:
 License
 -------
 
-TBD
+[MIT](https://github.com/OULibraries/ansible-role-ec2-cloudwatch-logs/blob/master/LICENSE)
 
 Author Information
 ------------------
